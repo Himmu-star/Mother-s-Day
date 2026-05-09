@@ -6,27 +6,19 @@
 
   <title>Happy Mother's Day ❤️</title>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- React -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
-  <!-- Babel -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- Framer Motion -->
   <script src="https://unpkg.com/framer-motion/dist/framer-motion.js"></script>
-
-  <!-- Lucide -->
-  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     body {
@@ -53,10 +45,6 @@
       background: #fda4af;
       border-radius: 20px;
     }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #fb7185;
-    }
   </style>
 </head>
 
@@ -69,36 +57,14 @@
 const { motion, AnimatePresence } = Motion;
 
 const PHOTOS = [
-  {
-    id: 1,
-    url: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=800&auto=format&fit=crop",
-    caption: "My safest place ❤️"
-  },
-  {
-    id: 2,
-    url: "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?q=80&w=800&auto=format&fit=crop",
-    caption: "Your smile is my sunshine ✨"
-  },
-  {
-    id: 3,
-    url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
-    caption: "Forever my home 💖"
-  },
-  {
-    id: 4,
-    url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop",
-    caption: "Best memories together 🌸"
-  },
-  {
-    id: 5,
-    url: "https://images.unsplash.com/photo-1501333190100-ad94c3c97ea0?q=80&w=800&auto=format&fit=crop",
-    caption: "Love you forever Maa 💕"
-  },
-  {
-    id: 6,
-    url: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop",
-    caption: "My biggest blessing ✨"
-  }
+  { id: 1, url: "./1.jpeg", caption: "My safest place ❤️" },
+  { id: 2, url: "./2.jpeg", caption: "Your smile is my sunshine ✨" },
+  { id: 3, url: "./3.jpeg", caption: "Forever my home 💖" },
+  { id: 4, url: "./4.jpeg", caption: "Best memories together 🌸" },
+  { id: 5, url: "./5.jpeg", caption: "Love you forever Maa 💕" },
+  { id: 6, url: "./6.jpeg", caption: "My biggest blessing ✨" },
+  { id: 7, url: "./7.jpeg", caption: "Thank you Maa ❤️" },
+  { id: 8, url: "./8.jpeg", caption: "You mean everything 🌷" }
 ];
 
 function FloatingHeart({ delay }) {
@@ -116,7 +82,7 @@ function FloatingHeart({ delay }) {
         delay,
         ease: "linear"
       }}
-      className="fixed text-pink-300/40 z-0 pointer-events-none"
+      className="fixed text-pink-300/40 z-0 pointer-events-none text-2xl"
       style={{ left: `${Math.random() * 100}%` }}
     >
       ❤️
@@ -135,7 +101,7 @@ function App() {
         <FloatingHeart key={i} delay={i * 0.8} />
       ))}
 
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section className="h-screen flex flex-col items-center justify-center text-center px-6 relative">
 
         <motion.div
@@ -157,7 +123,7 @@ function App() {
           </h1>
 
           <p className="mt-8 text-xl md:text-3xl text-rose-700/80 italic max-w-3xl mx-auto font-serif">
-            "You are the heart of our home and the reason behind every smile."
+            You are the heart of our home ❤️
           </p>
 
           <button
@@ -238,49 +204,34 @@ function App() {
 
       </section>
 
-      {/* MESSAGE */}
+      {/* AUDIO MESSAGE */}
       <section className="py-24 px-6">
 
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="max-w-5xl mx-auto bg-white/70 backdrop-blur-xl rounded-[4rem] p-12 md:p-20 shadow-2xl border border-white"
+          className="max-w-4xl mx-auto bg-white/70 backdrop-blur-xl rounded-[4rem] p-12 md:p-20 shadow-2xl border border-white text-center"
         >
 
-          <div className="text-center">
-
-            <div className="text-6xl mb-8">
-              ❤️
-            </div>
-
-            <h2 className="text-4xl md:text-6xl text-rose-800 font-bold font-serif italic mb-12">
-              To The Best Mother In The World ❤️
-            </h2>
-
-            <div className="space-y-8 text-xl md:text-2xl text-rose-900/80 leading-relaxed italic font-serif">
-
-              <p>
-                Maa, thank you for being the biggest blessing of my life.
-                Your love, care, sacrifices and support mean everything to me.
-              </p>
-
-              <p>
-                No matter how old I become, I will always need your love,
-                your smile and your warmth.
-              </p>
-
-              <p>
-                You are my first home, my first teacher and my forever safe place.
-              </p>
-
-              <p>
-                I love you more than words can ever explain ❤️
-              </p>
-
-            </div>
-
+          <div className="text-6xl mb-8">
+            🎧
           </div>
+
+          <h2 className="text-4xl md:text-6xl text-rose-800 font-bold font-serif italic mb-10">
+            A Special Message For You ❤️
+          </h2>
+
+          <p className="text-rose-600 text-xl italic mb-10 font-serif">
+            Tap below and listen ❤️
+          </p>
+
+          <audio
+            controls
+            className="w-full max-w-2xl mx-auto"
+          >
+            <source src="./audio.mp3" type="audio/mpeg" />
+          </audio>
 
         </motion.div>
 
