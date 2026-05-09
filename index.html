@@ -1,361 +1,382 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Heart, 
-  Sparkles, 
-  Camera, 
-  Volume2, 
-  VolumeX, 
-  ChevronDown,
-  X 
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-// --- Theme & Configuration ---
-const THEME = {
-  background: "bg-gradient-to-br from-rose-50 via-pink-50 to-orange-50",
-  accent: "text-rose-500",
-  card: "bg-white/70 backdrop-blur-lg border border-white/80 shadow-rose-100/50",
-};
+  <title>Happy Mother's Day ❤️</title>
 
-// Aesthetic High-Quality Images for Maa
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Framer Motion -->
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.js"></script>
+
+  <!-- Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: #fffafb;
+      font-family: 'Quicksand', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #fff1f2;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #fda4af;
+      border-radius: 20px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #fb7185;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const { motion, AnimatePresence } = Motion;
+
 const PHOTOS = [
-  { id: 1, url: "https://images.unsplash.com/photo-1596901058170-49666993a405?q=80&w=800&auto=format&fit=crop", caption: "My safest placee ❤️" },
-  { id: 2, url: "https://images.unsplash.com/photo-1544126592-807daa2b5650?q=80&w=800&auto=format&fit=crop", caption: "Your smile is my sunshine ✨" },
-  { id: 3, url: "https://images.unsplash.com/photo-1510154221590-ff63e90a136f?q=80&w=800&auto=format&fit=crop", caption: "Childhood memories forever 💖" },
-  { id: 4, url: "https://images.unsplash.com/photo-1484981138541-3d074aa97716?q=80&w=800&auto=format&fit=crop", caption: "Sweetest moments with you 🍭" },
-  { id: 5, url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=800&auto=format&fit=crop", caption: "The heart of our home 🏠" },
-  { id: 6, url: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=800&auto=format&fit=crop", caption: "Always holding my hand 🫂" },
-  { id: 7, url: "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?q=80&w=800&auto=format&fit=crop", caption: "Quiet nights, warm hugs ☁️" },
-  { id: 8, url: "https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=800&auto=format&fit=crop", caption: "You painted my world with love 🌈" },
-  { id: 9, url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop", caption: "My biggest cheerleader 🎊" },
-  { id: 10, url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop", caption: "Simple joys, infinite love ☕" },
-  { id: 11, url: "https://images.unsplash.com/photo-1501333190100-ad94c3c97ea0?q=80&w=800&auto=format&fit=crop", caption: "Growing up in your light ☀️" },
-  { id: 12, url: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop", caption: "God's greatest gift to me 💝" },
+  {
+    id: 1,
+    url: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=800&auto=format&fit=crop",
+    caption: "My safest place ❤️"
+  },
+  {
+    id: 2,
+    url: "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?q=80&w=800&auto=format&fit=crop",
+    caption: "Your smile is my sunshine ✨"
+  },
+  {
+    id: 3,
+    url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
+    caption: "Forever my home 💖"
+  },
+  {
+    id: 4,
+    url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop",
+    caption: "Best memories together 🌸"
+  },
+  {
+    id: 5,
+    url: "https://images.unsplash.com/photo-1501333190100-ad94c3c97ea0?q=80&w=800&auto=format&fit=crop",
+    caption: "Love you forever Maa 💕"
+  },
+  {
+    id: 6,
+    url: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop",
+    caption: "My biggest blessing ✨"
+  }
 ];
 
-// --- Sub-components ---
+function FloatingHeart({ delay }) {
+  return (
+    <motion.div
+      initial={{ y: "100vh", opacity: 0 }}
+      animate={{
+        y: "-10vh",
+        opacity: [0, 0.6, 0],
+        x: [0, 20, -20, 0]
+      }}
+      transition={{
+        duration: 10,
+        repeat: Infinity,
+        delay,
+        ease: "linear"
+      }}
+      className="fixed text-pink-300/40 z-0 pointer-events-none"
+      style={{ left: `${Math.random() * 100}%` }}
+    >
+      ❤️
+    </motion.div>
+  );
+}
 
-const FloatingHeart = ({ delay = 0 }) => (
-  <motion.div
-    initial={{ y: "110vh", opacity: 0, scale: 0.5 }}
-    animate={{ 
-      y: "-10vh", 
-      opacity: [0, 0.6, 0.6, 0],
-      x: [0, Math.random() * 60 - 30, 0] 
-    }}
-    transition={{ 
-      duration: 8 + Math.random() * 10, 
-      repeat: Infinity, 
-      delay,
-      ease: "linear" 
-    }}
-    className="fixed pointer-events-none text-rose-300/40 z-0"
-    style={{ left: `${Math.random() * 100}%` }}
-  >
-    <Heart fill="currentColor" size={Math.random() * 24 + 12} />
-  </motion.div>
-);
+function App() {
 
-// --- Main App Component ---
-
-export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const audioRef = useRef(null);
-
-  useEffect(() => {
-    // Artificial loading for that "surprise" feel
-    const timer = setTimeout(() => setLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const toggleMusic = () => {
-    if (isPlaying) {
-      audioRef.current?.pause();
-    } else {
-      audioRef.current?.play().catch((err) => console.log("Audio play blocked", err));
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  if (loading) {
-    return (
-      <div className={`h-screen w-full flex flex-col items-center justify-center ${THEME.background}`}>
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          className="text-rose-400"
-        >
-          <Heart fill="currentColor" size={70} />
-        </motion.div>
-        <p className="mt-6 font-serif italic text-rose-500/70 text-xl animate-pulse tracking-widest">
-          Making it special for Maa...
-        </p>
-      </div>
-    );
-  }
+  const [selectedPhoto, setSelectedPhoto] = React.useState(null);
 
   return (
-    <div className={`min-h-screen relative font-sans selection:bg-rose-200 selection:text-rose-800 ${THEME.background} overflow-x-hidden`}>
-      
-      {/* Background Hearts */}
-      {[...Array(15)].map((_, i) => <FloatingHeart key={i} delay={i * 1.5} />)}
-      
-      {/* Music Toggle Button */}
-      <div className="fixed top-6 right-6 z-50">
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleMusic}
-          className="p-4 bg-white/80 backdrop-blur-md rounded-full shadow-xl border border-white text-rose-500 hover:bg-rose-500 hover:text-white transition-all"
-        >
-          {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
-        </motion.button>
-        <audio ref={audioRef} loop>
-          <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg" />
-        </audio>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-orange-50 relative overflow-hidden">
 
-      {/* 1. Hero Section */}
-      <section className="h-screen flex flex-col items-center justify-center p-6 text-center relative">
+      {[...Array(15)].map((_, i) => (
+        <FloatingHeart key={i} delay={i * 0.8} />
+      ))}
+
+      {/* HERO */}
+      <section className="h-screen flex flex-col items-center justify-center text-center px-6 relative">
+
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="z-10"
         >
-          <motion.div 
-             animate={{ rotate: [0, 10, -10, 0] }}
-             transition={{ repeat: Infinity, duration: 5 }}
-             className="mb-4"
-          >
-            <Sparkles className="text-rose-400 inline-block" size={40} />
-          </motion.div>
-          
-          <h1 className="text-6xl md:text-9xl font-serif font-bold text-rose-800 mb-6 tracking-tight leading-tight">
-            Happy Mother's Day <br />
-            <span className="text-rose-500 italic drop-shadow-sm">Maa ❤️</span>
+
+          <div className="text-5xl mb-6">
+            ✨
+          </div>
+
+          <h1 className="text-5xl md:text-8xl font-bold text-rose-800 leading-tight font-serif">
+            Happy Mother's Day
+            <br />
+            <span className="text-rose-500 italic">
+              Maa ❤️
+            </span>
           </h1>
-          
-          <p className="text-xl md:text-3xl text-rose-700/70 italic max-w-2xl mx-auto leading-relaxed font-serif">
+
+          <p className="mt-8 text-xl md:text-3xl text-rose-700/80 italic max-w-3xl mx-auto font-serif">
             "You are the heart of our home and the reason behind every smile."
           </p>
-          
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-            className="mt-14 bg-rose-500 text-white px-10 py-5 rounded-full shadow-2xl shadow-rose-200 font-bold text-xl flex items-center gap-3 mx-auto transition-all hover:bg-rose-600"
+
+          <button
+            onClick={() => {
+              document.getElementById("gallery").scrollIntoView({
+                behavior: "smooth"
+              });
+            }}
+            className="mt-12 bg-rose-500 hover:bg-rose-600 text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl transition-all"
           >
             For You Maa 💌
-          </motion.button>
+          </button>
+
         </motion.div>
 
-        {/* Scroll Indicator */}
-        <motion.div 
-          animate={{ y: [0, 15, 0] }}
-          transition={{ repeat: Infinity, duration: 2.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <ChevronDown className="text-rose-300" size={40} />
-        </motion.div>
       </section>
 
-      {/* 2. Photo Scrapbook Gallery */}
-      <section className="py-32 px-6 max-w-7xl mx-auto">
-        <div className="flex flex-col items-center justify-center gap-4 mb-24 text-center">
-          <Camera className="text-rose-400" size={40} />
-          <h2 className="text-5xl font-serif font-bold text-rose-800">Our Happiest Moments</h2>
-          <div className="w-32 h-1.5 bg-rose-200 rounded-full mt-2" />
+      {/* GALLERY */}
+      <section
+        id="gallery"
+        className="py-24 px-6 max-w-7xl mx-auto"
+      >
+
+        <div className="text-center mb-20">
+
+          <div className="text-5xl mb-5">
+            📸
+          </div>
+
+          <h2 className="text-5xl font-bold text-rose-800 font-serif">
+            Beautiful Memories
+          </h2>
+
+          <div className="w-28 h-1 bg-rose-200 mx-auto rounded-full mt-5"></div>
+
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-          {PHOTOS.map((photo, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+
+          {PHOTOS.map((photo, index) => (
+
             <motion.div
               key={photo.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: (i % 4) * 0.1, duration: 0.7 }}
+              transition={{
+                duration: 0.7,
+                delay: index * 0.1
+              }}
               viewport={{ once: true }}
               onClick={() => setSelectedPhoto(photo)}
-              className="group cursor-pointer"
+              className="cursor-pointer group"
             >
-              <div className="bg-white p-5 rounded-[2rem] shadow-2xl shadow-rose-100/50 transition-all duration-500 group-hover:shadow-rose-200 group-hover:-translate-y-4">
-                <div className="aspect-[4/5] bg-rose-50 rounded-2xl overflow-hidden shadow-inner mb-5">
-                   <motion.img 
-                     src={photo.url} 
-                     alt={photo.caption}
-                     whileHover={{ scale: 1.15 }}
-                     transition={{ duration: 1 }}
-                     className="w-full h-full object-cover"
-                   />
+
+              <div className="bg-white p-4 rounded-[2rem] shadow-xl hover:-translate-y-3 transition-all duration-500">
+
+                <div className="overflow-hidden rounded-[1.5rem] aspect-[4/5]">
+
+                  <img
+                    src={photo.url}
+                    alt=""
+                    className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                  />
+
                 </div>
-                <p className="text-center font-serif text-rose-900 italic font-semibold text-lg px-2 group-hover:text-rose-500 transition-colors">
+
+                <p className="text-center mt-5 text-rose-700 italic font-semibold text-lg font-serif">
                   {photo.caption}
                 </p>
+
               </div>
+
             </motion.div>
+
           ))}
+
         </div>
+
       </section>
 
-      {/* 3. Emotional Message Card */}
-      <section className="py-24 px-6 mb-20">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className={`relative p-12 md:p-24 rounded-[5rem] ${THEME.card} shadow-2xl overflow-hidden text-center`}
-          >
-            {/* Background Decorative Sparkles */}
-            <div className="absolute top-0 right-0 p-12 text-rose-200/40 pointer-events-none">
-              <Sparkles size={160} />
-            </div>
-            <div className="absolute bottom-0 left-0 p-12 text-rose-200/40 pointer-events-none rotate-180">
-              <Sparkles size={160} />
-            </div>
+      {/* MESSAGE */}
+      <section className="py-24 px-6">
 
-            <div className="relative z-10">
-              <Heart className="text-rose-500 mx-auto mb-10 animate-pulse" size={70} fill="currentColor" />
-              
-              <h2 className="text-4xl md:text-6xl font-serif font-bold text-rose-800 mb-12 italic">
-                To the Best Mother in the World ❤️
-              </h2>
-              
-              <div className="space-y-10 text-rose-900/80 leading-relaxed text-xl md:text-2xl font-serif italic max-w-3xl mx-auto">
-                <p>
-                  Maa, thank you for being the quiet strength behind everything I do. Your love is the only unconditional thing in this world, a constant light that never fades.
-                </p>
-                <p>
-                  From drying my tears when I was small to cheering for me as I grew, you've been my first teacher and my greatest support. No one can ever replace the warmth of your hug or the peace of your smile.
-                </p>
-                <p>
-                  I love you more than words can ever capture. Thank you for always being there.
-                </p>
-              </div>
-
-              <motion.p 
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ repeat: Infinity, duration: 2.5 }}
-                className="mt-20 text-rose-600 font-bold text-3xl tracking-[0.25em] uppercase"
-              >
-                I Love You Maa
-              </motion.p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 4. Final Love Section */}
-      <section className="py-48 px-6 text-center bg-white/40 backdrop-blur-sm relative">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="space-y-10"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="max-w-5xl mx-auto bg-white/70 backdrop-blur-xl rounded-[4rem] p-12 md:p-20 shadow-2xl border border-white"
         >
-          <motion.div
-            animate={{ 
-              scale: [1, 1.3, 1],
-              filter: ["drop-shadow(0 0 0px #f43f5e)", "drop-shadow(0 0 30px #f43f5e)", "drop-shadow(0 0 0px #f43f5e)"]
-            }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="inline-block"
-          >
-            <Heart fill="#f43f5e" className="text-rose-500" size={120} />
-          </motion.div>
-          
-          <h2 className="text-7xl md:text-[10rem] font-serif font-bold text-rose-800 tracking-tighter drop-shadow-2xl">
-            I LOVE YOU MAA ❤️
-          </h2>
-          
-          <div className="flex justify-center gap-6">
-            {[...Array(8)].map((_, i) => (
-              <motion.div
-                key={i}
-                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
-                transition={{ repeat: Infinity, duration: 3, delay: i * 0.4 }}
-              >
-                <Sparkles className="text-rose-400" size={40} />
-              </motion.div>
-            ))}
+
+          <div className="text-center">
+
+            <div className="text-6xl mb-8">
+              ❤️
+            </div>
+
+            <h2 className="text-4xl md:text-6xl text-rose-800 font-bold font-serif italic mb-12">
+              To The Best Mother In The World ❤️
+            </h2>
+
+            <div className="space-y-8 text-xl md:text-2xl text-rose-900/80 leading-relaxed italic font-serif">
+
+              <p>
+                Maa, thank you for being the biggest blessing of my life.
+                Your love, care, sacrifices and support mean everything to me.
+              </p>
+
+              <p>
+                No matter how old I become, I will always need your love,
+                your smile and your warmth.
+              </p>
+
+              <p>
+                You are my first home, my first teacher and my forever safe place.
+              </p>
+
+              <p>
+                I love you more than words can ever explain ❤️
+              </p>
+
+            </div>
+
           </div>
+
         </motion.div>
+
       </section>
 
-      {/* Footer */}
-      <footer className="py-20 text-center bg-white/60 border-t border-rose-100">
-        <p className="text-rose-400 font-serif italic text-2xl mb-4 px-4">
-          "A mother's love is the fuel that enables a normal human being to do the impossible."
+      {/* FINAL */}
+      <section className="py-40 text-center relative">
+
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1]
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 2
+          }}
+          className="text-8xl mb-8"
+        >
+          ❤️
+        </motion.div>
+
+        <h2 className="text-5xl md:text-8xl text-rose-800 font-bold font-serif">
+          I LOVE YOU MAA ❤️
+        </h2>
+
+        <p className="mt-8 text-rose-500 text-2xl italic font-serif">
+          Home is wherever you are.
         </p>
-        <p className="text-rose-400 font-sans text-sm tracking-widest font-bold uppercase mt-8 opacity-60">
+
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-12 text-center border-t border-rose-100 bg-white/50">
+
+        <p className="text-rose-400 italic text-xl font-serif">
           Made with endless love for Maa ❤️
         </p>
+
       </footer>
 
-      {/* Lightbox / Popup for Photos */}
+      {/* LIGHTBOX */}
       <AnimatePresence>
+
         {selectedPhoto && (
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-rose-950/70 backdrop-blur-3xl flex items-center justify-center p-6"
             onClick={() => setSelectedPhoto(null)}
+            className="fixed inset-0 bg-black/70 backdrop-blur-xl z-50 flex items-center justify-center p-6"
           >
+
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              className="bg-white p-8 rounded-[4rem] shadow-2xl max-w-xl w-full text-center relative"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
               onClick={(e) => e.stopPropagation()}
+              className="bg-white p-6 rounded-[3rem] max-w-xl w-full text-center relative"
             >
-              <button 
+
+              <button
                 onClick={() => setSelectedPhoto(null)}
-                className="absolute top-8 right-8 p-3 bg-rose-50 text-rose-400 hover:text-rose-600 hover:bg-rose-100 rounded-full transition-all"
+                className="absolute top-5 right-5 bg-rose-100 hover:bg-rose-200 w-12 h-12 rounded-full text-rose-500 text-xl"
               >
-                <X size={32} />
+                ✕
               </button>
-              
-              <div className="aspect-[4/5] w-full bg-rose-50 rounded-[3rem] overflow-hidden mb-10 shadow-inner">
-                <img src={selectedPhoto.url} className="w-full h-full object-cover" alt={selectedPhoto.caption} />
+
+              <div className="overflow-hidden rounded-[2rem] aspect-[4/5]">
+
+                <img
+                  src={selectedPhoto.url}
+                  className="w-full h-full object-cover"
+                />
+
               </div>
-              
-              <h3 className="text-4xl font-serif italic text-rose-800 mb-4">"{selectedPhoto.caption}"</h3>
-              <p className="text-rose-400 font-bold italic text-lg">Every moment with you is a blessing.</p>
+
+              <h3 className="mt-6 text-3xl text-rose-800 font-serif italic">
+                {selectedPhoto.caption}
+              </h3>
+
             </motion.div>
+
           </motion.div>
+
         )}
+
       </AnimatePresence>
 
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
-        
-        body {
-          font-family: 'Quicksand', sans-serif;
-          background-color: #fffafb;
-          scroll-behavior: smooth;
-        }
-
-        h1, h2, h3, .font-serif {
-          font-family: 'Playfair Display', serif;
-        }
-
-        ::-webkit-scrollbar {
-          width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-          background: #fff5f6;
-        }
-        ::-webkit-scrollbar-thumb {
-          background: #fecdd3;
-          border-radius: 20px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-          background: #fb7185;
-        }
-      `}</style>
     </div>
   );
 }
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+
+</body>
+</html>
